@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" type="image/png" href="../assets/igreja/logo-casa-adoradores.png">
+  <link rel="apple-touch-icon" href="../assets/igreja/logo-casa-adoradores.png">
+  <meta name="theme-color" content="#071c3b">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Adoradores Church — Área da Equipe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div id="authView" class="auth-screen">
+  <div class="auth-card">
+    <div class="brand-row"><img class="church-logo" src="../assets/igreja/logo-casa-adoradores.png" alt="Adoradores Church"><div><strong>Adoradores Church</strong><small>Ministério de oração</small></div></div>
+    <span class="eyebrow">ÁREA RESTRITA</span>
+    <h1>Cuide de cada pedido.</h1>
+    <p>Entre no painel para acompanhar as mensagens enviadas pela comunidade.</p>
+    <form id="loginForm">
+      <label>E-mail<input id="email" type="email" autocomplete="username" placeholder="seuemail@igreja.com" required></label>
+      <label>Senha<input id="password" type="password" autocomplete="current-password" placeholder="Sua senha" required></label>
+      <button class="primary" type="submit">Entrar no painel</button>
+      <div id="loginError" class="error"></div>
+    </form>
+    <a class="back-link" href="../index.html">← Voltar ao site</a>
+  </div>
+</div>
+
+<div id="appView" class="app hidden">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><img class="sidebar-logo" src="../assets/igreja/logo-casa-adoradores.png" alt="Adoradores Church"><div><strong>Adoradores Church</strong><small>Ministério de oração</small></div></div>
+    <nav>
+      <a class="active" href="#pedidos">Visão geral</a>
+      <a href="#novos" data-quick="novo">Novos <b id="navNew">0</b></a>
+      <a href="#em-oracao" data-quick="em_oracao">Em oração <b id="navPrayer">0</b></a>
+      <a href="#concluidos" data-quick="concluido">Concluídos</a>
+    </nav>
+    <div class="sidebar-note"><span>✦</span><div><strong>Um pedido de cada vez.</strong><small>Obrigado por cuidar de quem confiou sua história.</small></div></div>
+    <div class="sidebar-bottom"><a href="../index.html">Ver site público</a><button id="logoutBtn">Sair</button></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><span class="eyebrow">MINISTÉRIO DE ORAÇÃO</span><h2>Visão geral</h2><p>Acompanhe e cuide dos pedidos recebidos.</p></div>
+      <div class="user-pill"><span id="userInitial">U</span><div><strong id="userEmail">Usuário</strong><small>Equipe autorizada</small></div></div>
+    </header>
+
+    <section class="stats">
+      <div class="stat-card"><span>Todos os pedidos</span><strong id="statAll">0</strong><small>registrados</small></div>
+      <div class="stat-card highlight"><span>Novos</span><strong id="statNew">0</strong><small>aguardando cuidado</small></div>
+      <div class="stat-card"><span>Em oração</span><strong id="statPrayer">0</strong><small>em acompanhamento</small></div>
+      <div class="stat-card"><span>Concluídos</span><strong id="statDone">0</strong><small>finalizados</small></div>
+    </section>
+
+
+<section class="dashboard-analytics">
+  <div class="analytics-chart">
+    <div class="analytics-head">
+      <div><span class="eyebrow">MOVIMENTO DOS PEDIDOS</span><h3>Pedidos por mês</h3><p>Volume de pedidos recebidos nos últimos 12 meses.</p></div>
+      <span class="chart-live"><i></i> Dados do banco</span>
+    </div>
+    <div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+  </div>
+  <div class="analytics-side">
+    <div class="mini-indicator">
+      <span class="mini-icon blue">↗</span>
+      <div><small>Neste mês</small><strong id="indMonth">0</strong><em id="indMonthText">pedidos recebidos</em></div>
+    </div>
+    <div class="mini-indicator">
+      <span class="mini-icon green">✓</span>
+      <div><small>Concluídos</small><strong id="indDoneRate">0%</strong><em>dos pedidos</em></div>
+    </div>
+    <div class="mini-indicator">
+      <span class="mini-icon navy">◉</span>
+      <div><small>Identificados</small><strong id="indIdentified">0%</strong><em>com contato disponível</em></div>
+    </div>
+    <div class="analytics-note"><strong>Cuide do que chegou hoje.</strong><p>Os indicadores são calculados diretamente dos pedidos registrados no Supabase.</p></div>
+  </div>
+</section>
+
+    <section class="content-head">
+      <div><h3>Pedidos recentes</h3><p>Os pedidos mais recentes aparecem primeiro.</p></div>
+      <button id="refreshBtn" class="ghost">↻ Atualizar</button>
+    </section>
+
+    <section class="toolbar">
+      <div class="search-wrap"><span>⌕</span><input id="search" type="search" placeholder="Buscar por nome, WhatsApp ou pedido..."></div>
+      <select id="statusFilter"><option value="all">Todos os status</option><option value="novo">Novos</option><option value="em_oracao">Em oração</option><option value="concluido">Concluídos</option><option value="arquivado">Arquivados</option></select>
+      <select id="monthFilter" aria-label="Filtrar por mês">
+        <option value="all">Todos os meses</option>
+      </select>
+      <select id="privacyFilter"><option value="all">Todos os pedidos</option><option value="identified">Identificados</option><option value="anonymous">Anônimos</option></select>
+    </section>
+
+    <section id="requestsList" class="requests"></section>
+    <div id="emptyState" class="empty hidden"><div>🙏</div><h3>Nenhum pedido encontrado</h3><p>Tente mudar os filtros ou aguarde novos pedidos.</p></div>
+    <div id="loading" class="loading">Carregando pedidos...</div>
+  </main>
+</div>
+
+<div id="detailModal" class="modal hidden">
+  <div class="modal-backdrop"></div>
+  <article class="modal-card">
+    <button class="modal-close" id="closeModal" aria-label="Fechar">×</button>
+    <span class="eyebrow">PEDIDO DE ORAÇÃO</span>
+    <div class="detail-head"><div><h3 id="detailTitle">Pedido</h3><div id="detailDate"></div></div><span id="detailPrivacy"></span></div>
+    <div class="detail-meta" id="detailMeta"></div>
+    <div class="detail-request" id="detailRequest"></div>
+    <div class="detail-actions">
+      <div><label>Status<select id="detailStatus"><option value="novo">Novo</option><option value="em_oracao">Em oração</option><option value="concluido">Concluído</option><option value="arquivado">Arquivado</option></select></label></div>
+      <button id="saveStatus" class="primary">Salvar status</button>
+      <a id="contactPerson" class="contact hidden" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+    <div id="detailFeedback" class="feedback"></div>
+  </article>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="../config.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
